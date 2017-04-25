@@ -5,6 +5,7 @@ import Tyche.Prelude
 import Tyche.Random
 import Tyche.Inference.Enumerate
 import Tyche.Inference.LikelihoodWeighting
+import Tyche.Inference.ParticleCascade
 
 import Control.Monad (when)
 
@@ -19,3 +20,4 @@ main :: IO ()
 main = do
   print $ enumD model
   print $ runRand 0 $ lwD 100 model
+  print $ runRand 0 $ pcD 100 model

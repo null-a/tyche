@@ -20,3 +20,6 @@ logSumExp xs = if isInfinite m then m else log s + m
   where
     m = maximum xs
     s = foldl' (\acc x -> acc + exp (x - m)) 0 xs
+
+logAddExp :: Double -> Double -> Double
+logAddExp x y = log $ exp x + exp y

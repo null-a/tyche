@@ -18,6 +18,7 @@ library
                      , Tyche.Prelude
                      , Tyche.Inference.Enumerate
                      , Tyche.Inference.LikelihoodWeighting
+                     , Tyche.Inference.ParticleCascade
   build-depends:       base >= 4.7 && < 5
                      , random >= 1.1
                      , transformers >= 0.5.2.0
