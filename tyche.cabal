@@ -23,6 +23,14 @@ library
                      , transformers >= 0.5.2.0
   default-language:    Haskell2010
 
+test-suite test
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   tests
+  main-is:          TestMain.hs
+  build-depends:    base >= 4.7 && < 5
+                  , tyche
+  default-language: Haskell2010
+
 source-repository head
   type:     git
   location: https://github.com/null-a/tyche
