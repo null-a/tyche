@@ -4,6 +4,7 @@
 module Tyche.Dist where
 
 import Tyche.Prob
+import Tyche.Random
 import Data.Function (on)
 import Data.List (groupBy,sortBy)
 import Data.Ord (comparing)
@@ -13,7 +14,7 @@ data Dist a where
   Delta :: a -> Dist a
   -- Assumes that:
   -- Probabilities sum to one (which implies the list is non-empty)
-  -- The as are distinct (this assumption will be used by the sampler)
+  -- The as are distinct.
   Discrete :: [(a,Prob)] -> Dist a
   Uniform :: Dist Double
 
@@ -52,3 +53,18 @@ normalize pairs = if logNorm > negInf
                   then (fmap . fmap) (exp . (subtract logNorm)) pairs
                   else error "Can't normalize."
   where logNorm = logSumExp (map snd pairs)
+
+sample :: Dist a -> Rand a
+sample (Bernoulli p) = (< p) <$> rand
+sample (Delta x) = return x
+sample (Discrete assoc) = loop assoc 1
+   where
+     loop [] _ = error "Something went wrong."
+     loop [(x,_)] _ = return x
+     loop ((x,p):rest) remaining = do
+       r <- rand
+       if r < p/remaining
+       then return x
+       else loop rest (remaining-p)
+-- The end points are wrong here, one should be included.
+sample Uniform = rand
